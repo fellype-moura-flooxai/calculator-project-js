@@ -204,7 +204,7 @@ getLastItem(isOperator = true){
         } else {
 
         let newValue = this.getLastOperation().toString() + value.toString();
-        this.setLastOperation(parseFloat(newValue));
+        this.setLastOperation(newValue);
         this.setLastNumberToDisplay();
 
         }
@@ -222,6 +222,9 @@ getLastItem(isOperator = true){
     addDot(){
 
       let lastOperation = this.getLastOperation();
+      
+      if (typeof lastOperation  === 'string' && lastOperation.split('').indexOf('.') > -1) return;
+
       if (this.isOperator(lastOperation) || !lastOperation) {
        this.pushOperation('0.');
       } else {
