@@ -45,6 +45,8 @@ class CalcController {
     clearAll(){
 
      this._operation = [];
+     this._lastNumber = '';
+     this._lastOperator = '';
 
      this.setLastNumberToDisplay();
 
@@ -185,11 +187,6 @@ getLastItem(isOperator = true){
           
           this.setLastOperation(value);
 
-        } else if (isNaN(value)) {
-
-
-          console.log("outra coisa",value);
-
         } else {
 
           this.pushOperation(value);
@@ -207,7 +204,7 @@ getLastItem(isOperator = true){
         } else {
 
         let newValue = this.getLastOperation().toString() + value.toString();
-        this.setLastOperation(parseInt(newValue));
+        this.setLastOperation(parseFloat(newValue));
         this.setLastNumberToDisplay();
 
         }
@@ -219,6 +216,20 @@ getLastItem(isOperator = true){
     setError(){
 
       this.displayCalc = "Error";
+
+    }
+
+    addDot(){
+
+      let lastOperation = this.getLastOperation();
+      if (this.isOperator(lastOperation) || !lastOperation) {
+       this.pushOperation('0.');
+      } else {
+        this.setLastOperation(lastOperation.toString() + '.');
+
+      }
+
+      this.setLastNumberToDisplay();
 
     }
 
@@ -251,7 +262,7 @@ getLastItem(isOperator = true){
         this.calc();
       break;
       case 'ponto': 
-          this.addOperation('.');
+          this.addDot();
       break;
 
       case '0':
